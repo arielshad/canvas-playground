@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css" media="screen">
+		body, html {
+			overflow: hidden;
+			font-family: Helvetica, Arial, sans-serif;
+			color: #fff;
+			font-size: 11px;
+			background: #010c12;
+		}
+	</style>
+</head>
+<body>
+
+<script>
+	(function(){
+	var d = document,
+		canvas = d.body.appendChild( d.createElement( 'canvas' ) ),
+		context = canvas.getContext( '2d' ),
+		time = 0,
+		w = 1,
+		h = 1,
+		cos = Math.cos,
+		sin = Math.sin,
+		PI = Math.PI,
+		sqrt = Math.sqrt,
+		abs = Math.abs,
+		pow = Math.pow;
+
+	
+	function resize() {
+		canvas.width = w = innerWidth;
+		canvas.height = h = innerHeight;
+	}
+
+	// Monitor browser resize
+	addEventListener( 'resize', resize, false );
+
+	// Initial size
+	resize();
+	
+	// The main animation loop
+	setInterval( function() {
+		context.clearRect( 0, 0, w, h );
+		context.fillStyle = 'rgba(0,255,255,.5)';
+		context.globalCompositeOperation = 'lighter';
+		
+		time += .1;
+		
+		// The number of particles to generate
+		i = 10000;
+		const c = 100;
+		while( i >= 0 ) {
+			i = i - 10;
+			let a = abs(
+				(
+					sqrt( w*0.4 + h*0.4 + time + i) 
+				)
+			)
+
+			let y = 100+(c+a*sin((time+i)*0.2)) * sin(time*0.0002+i)*cos(PI)
+			let x = w*0.1+(c+a*cos((time+i)*0.2)) * cos(time*0.0002+i)*cos(PI)
+			
+			context.fillRect( x+( w ) * 0.4, 
+							  y+(  h ) * 0.4, 
+							  1, 
+							  1 );
+			
+		}
+	}, 16 );
+})()
+</script>
+</body>
+</html>
